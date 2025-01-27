@@ -8,28 +8,36 @@
 </head>
 <body>
     <div class="container">
-        <h1>Sistema de Portaria | Polistampo</h1>
-
-        <!-- Ações -->
-        <h2>Registro de Entrada e Saída</h2>
-        <div class="actions">
-            <button onclick="adicionarRegistro('Entrada')">Registrar Entrada</button>
-            <button onclick="adicionarRegistro('Saída')">Registrar Saída</button>
-            <button onclick="limparRegistros()">Limpar Registros</button>
-        </div>
-
-        <!-- Registros -->
-        <h3>Registros em Tempo Real</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Tipo</th>
-                    <th>Data e Hora</th>
-                </tr>
-            </thead>
-            <tbody id="registros-tabela"></tbody>
-        </table>
+            <h1>Sistema de Portaria</h1>
+    
+            <!-- Calendário para Filtrar Registros -->
+            <label for="date-filter">Filtrar por Data:</label>
+            <input type="date" id="date-filter">
+    
+            <!-- Seleção de Prestadores de Serviço -->
+            <h3>Selecionar Prestador de Serviço</h3>
+            <select id="pj-dropdown">
+                <option value="" disabled selected>Selecione um Prestador de Serviço</option>
+                <!-- Nomes dos PJs serão carregados aqui -->
+            </select>
+            <button onclick="registrarEntrada()">Registrar Entrada</button>
+            <button onclick="registrarSaida()">Registrar Saída</button>
+    
+            <!-- Tabela de Registros -->
+            <h3>Registros</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Data e Hora</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="registros-tabela"></tbody>
+            </table>
+    
+            <button onclick="exportarExcel()">Exportar para Excel</button>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/script.js"></script>
