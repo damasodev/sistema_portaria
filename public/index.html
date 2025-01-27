@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Portaria</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Portaria | Polistampo</h1>
+
+        <!-- Ações -->
+        <h2>Registro de Entrada e Saída</h2>
+        <div class="actions">
+            <button onclick="adicionarRegistro('Entrada')">Registrar Entrada</button>
+            <button onclick="adicionarRegistro('Saída')">Registrar Saída</button>
+            <button onclick="limparRegistros()">Limpar Registros</button>
+        </div>
+
+        <!-- Registros -->
+        <h3>Registros em Tempo Real</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Data e Hora</th>
+                </tr>
+            </thead>
+            <tbody id="registros-tabela"></tbody>
+        </table>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
