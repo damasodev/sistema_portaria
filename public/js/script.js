@@ -105,3 +105,60 @@ document.getElementById("date-filter").addEventListener("change", (event) => {
             tabela.appendChild(row);
         });
 });
+
+import { db, collection, addDoc, onSnapshot, doc, deleteDoc } from "./firebase.js";
+
+const registrosRef = collection(db, "registros");
+
+// Registrar Entrada no Firebase
+async function registrarEntrada() {
+    const nome = document.getElementById("pj-dropdown").value;
+    if (!nome) {
+        alert("Selecione um prestador de serviço.");
+        return;
+    }
+
+    await addDoc(registrosRef, {
+        nome,
+        tipo: "Entrada",
+        dataHora: new Date().toLocaleString()
+    });
+}
+
+// Registrar Saída no Firebase
+async function registrarSaida() {
+    const nome = document.getElementById("pj-dropdown").value;
+    if (!nome) {
+        alert("Selecione um prestador de serviço.");
+        return;
+    }
+
+    await addDoc(registrosRef, {
+        nome,
+        tipo: "Saída",
+        dataHora: new Date().toLocaleString()
+    });
+}
+
+// Atualizar a tabela automaticamente em tempo real
+onSnapshot(registrosRef, (snapshot) => {
+    const tabela = document.getElementById("registros-tabela");
+    tabela.innerHTML = "";
+
+    snapshot.forEach((doc) => {
+        const registro = doc.data();
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${registro.nome}</td>
+            <td>${registro.tipo}</td>
+            <td>${registro.dataHora}</td>
+            <td><button onclick="removerRegistro('${doc.id}')">Remover</button></td>
+        `;
+        tabela.appendChild(row);
+    });
+});
+
+// Remover Registro do Firebase
+async function removerRegistro(id) {
+    await deleteDoc(doc(db, "registros", id));
+}
